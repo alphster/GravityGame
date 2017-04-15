@@ -2,12 +2,17 @@
 
 public class GravitationalPull : MonoBehaviour {
 
+    public static GravitationalPull Instance;
+    public int CollisionCount = 0;
+    public float CollisionMass = 0;
+
     public float Radius = 5f;
     public float GravStrength = 5f;
 
     private float gravStrengthLerpMin, gravStrengthLerpMax;
 
 	void Start () {
+        Instance = this;
         gravStrengthLerpMax = GravStrength;
         gravStrengthLerpMin = GravStrength * .1f;
 	}
@@ -27,7 +32,9 @@ public class GravitationalPull : MonoBehaviour {
 
             var strengthEase = Mathf.Lerp(gravStrengthLerpMin, gravStrengthLerpMax, 1 - (Radius / distance));
 
-            hcrb.AddForce(pullDirection * strengthEase);
+            // added collision factor, this should be exponential and possibly tiered
+            var collisionFactor = CollisionMass > 0 ? CollisionMass / 100 : 0;
+            hcrb.AddForce(pullDirection * strengthEase * collisionFactor);
         }
 	}
 }

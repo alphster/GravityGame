@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class BlackHoleCollision : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+    public static BlackHoleCollision Instance { get; set; }
+
+    // Use this for initialization
+    void Start () {
+        Instance = this;
 	}
 	
 	// Update is called once per frame
@@ -16,6 +18,8 @@ public class BlackHoleCollision : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GravitationalPull.Instance.CollisionCount++;
+        GravitationalPull.Instance.CollisionMass += collision.GetComponent<Rigidbody2D>().mass;
         AsteroidManager.Instance.RemoveAndDestroyAndRespawn(collision.gameObject);
     }
 }

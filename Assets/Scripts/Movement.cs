@@ -18,15 +18,8 @@ public class Movement : MonoBehaviour {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
 
             // Move object across XY plane
-            //transform.Translate(-touchDeltaPosition.x * Speed, -touchDeltaPosition.y * Speed, 0);
-            rb.AddForce(new Vector2(-touchDeltaPosition.x * Speed, -touchDeltaPosition.y * Speed));
+            var vector = new Vector2(touchDeltaPosition.x * Speed, touchDeltaPosition.y * Speed);
+            rb.AddForce(vector);
         }
-
-        /*
-        float inputH = Input.GetAxis("Horizontal");
-        float inputV = Input.GetAxis("Vertical");
-
-        rb.AddForce(new Vector2(inputH * Speed, inputV * Speed));
-        */
     }
 }
